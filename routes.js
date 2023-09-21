@@ -10,4 +10,7 @@ route.get('/', homeController.index)
 //login routes
 route.get('/login/index', loginController.index)
 
+route.post('/login/registro', loginController.register)
+
+
 module.exports = route;
