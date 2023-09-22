@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const bcrypt = require('bcryptjs')
 
 const LoginSchema = new mongoose.Schema({
   email: { type: String, require: true },
@@ -16,15 +17,40 @@ class Login {
     this.user = null
   }
 
+  async login() {
+    this.valid()
+    if(this.errors.length > 0) return
+    this.user = await LoginModel.findOne({ email: this.body.email })
+
+    if(!this.user) {
+      this.errors.push('Usuário não existe')
+      return;
+    }
+
+    if(! bcrypt.compareSync(this.body.password, this.user.password)) {
+      this.errors.push('Senha inválida')
+      this.user = null
+      return;
+    }
+
+  }
+
   async register() {
     this.valid()
     if(this.errors.length > 0) return
 
-    try {
-      this.user = await LoginModel.create(this.body)
-    } catch (e) {
-      console.log('Erro', e)
-    }
+    await this.userExists()
+
+    if(this.errors.length > 0) return
+    
+    const salt = bcrypt.genSaltSync()
+    this.body.password = bcrypt.hashSync(this.body.password, salt)
+    this.user = await LoginModel.create(this.body)
+  }
+
+  async userExists() {
+    this.user = await LoginModel.findOne({ email: this.body.email })
+    if (this.user) this.errors.push('Usuário já existe')
   }
 
   valid() {
@@ -33,7 +59,7 @@ class Login {
     if(!validator.isEmail(this.body.email)) this.errors.push('Email inválido ') 
 
     //password
-    if (this.body.password.length < 6 || this.body.password.length > 30) this.errors.push('A senha precisar ter entre 3 e 30 caractéres')
+    if (this.body.password.length < 5 || this.body.password.length >= 30) this.errors.push('A senha precisar ter entre 6 e 30 caractéres')
     
   }
 
