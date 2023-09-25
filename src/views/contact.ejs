@@ -9,16 +9,21 @@
 
       <div class="col-lg-8 my-3"></div>
         <h1 class="text-center">Contatos</h1>
-        <p class="text-center lead">Crie o edite seus contatos.</p>
+        <p class="text-center lead">Crie ou edite seus contatos.</p>
 
         <%- include('includes/messages') %>
         
-      <div class="form-group col">
-      <form action="/contato/registro" method="post">
+      <div class="form-group">
+        <% if(contact._id) { %>
+          <form action="/contato/edit/<%= contact._id %>" method="POST">
+          <% } else { %>
+          <form action="/contato/registro" method="POST">
+          <% } %>
+          
         <input type="hidden" name="_csrf" value=<%= csrfToken %>>
         <div class="form-group">
           <label >Nome</label>
-          <input value="<%= contact.name %>" type="text" class="form-control mb-3" name="name">
+          <input value="<%- contact.nome %>" type="text" class="form-control mb-3" name="name">
         </div>
         <div class="form-group">
           <label >Sobrenome</label>
