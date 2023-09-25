@@ -20,6 +20,7 @@ route.get('/contato/index', loginRequired, contactController.index)
 route.post('/contato/registro', loginRequired, contactController.register)
 route.get('/contato/index/:id', loginRequired, contactController.editIndex)
 route.post('/contato/edit/:id', loginRequired, contactController.edit)
+route.get('/contato/delete/:id', loginRequired, contactController.delete)
 
 
 

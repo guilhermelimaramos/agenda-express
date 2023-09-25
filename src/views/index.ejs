@@ -15,17 +15,24 @@
         
       <div class="col-lg-2"></div>
     </div>
+    <% if(contacts.length > 0) { %>
     <div class="responsive-table">
       <table class="table my-3">
-        <tr>
-          <td>Guilherme</td>
-          <td>Lima</td>
-          <td>(16)99348-1040</td>
-          <td>glimaramos013@gmail.com</td>
-        </tr>
+        <% contacts.forEach(contact => { %>
+          <tr>
+            <td><%= contact.name %></td>
+            <td><%= contact.lastname %></td>
+            <td><%= contact.phone %></td>
+            <td><%= contact.email %></td>
+            <td><a href="/contato/index/<%= contact._id %>">Editar</a></td>
+            <td><a class="text-danger" href="/contato/delete/<%= contact._id %>">Excluir</a></td>
+          </tr>
+          <% }); %>
       </table>
     </div>
-
+    <% } else { %>
+      <p class="text-center lead">Não existem contatos na sua agenda.</p>
+    <% } %>
   </div>
 
 <%- include('includes/footer') %>

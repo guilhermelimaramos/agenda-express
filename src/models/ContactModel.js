@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { async } = require('regenerator-runtime')
 // const { async } = require('regenerator-runtime')
 const validator = require('validator')
 
@@ -12,7 +13,7 @@ const ContactSchema = new mongoose.Schema({
 
 const ContactModel = mongoose.model('Contact', ContactSchema)
 
-class Contact {
+class Contact { 
   constructor(body) {
     this.body = body,
     this.errors = [],
@@ -55,10 +56,10 @@ class Contact {
     }
   }
 
-  async searchById(id) {
+  static async searchById(id) {
     if(typeof id !== 'string') return
-    const user = await ContactModel.findById(id)
-    return user 
+    const contact = await ContactModel.findById(id)
+    return contact
   }
 
   async edit(id) {
@@ -66,8 +67,20 @@ class Contact {
     this.valid
     if(this.errors.length > 0 ) return
     this.contact = await ContactModel.findByIdAndUpdate(id, this.body, { new: true })
-  }
-}
+  };
 
+  static async searchContact() {
+    const contacts = await ContactModel.find()
+      .sort({ creationDate: -1 })
+    return contacts
+  }
+
+  static async delete(id) {
+    if(typeof id !== 'string') return
+    const contact = await ContactModel.findOneAndDelete({ _id: id })
+    return contact
+  }
+
+}
 
 module.exports = Contact

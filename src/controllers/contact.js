@@ -32,10 +32,9 @@ exports.register = async (req, res) => {
 exports.editIndex = async (req, res) => {
   if(!req.params.id) return res.render('404')
 
-  const contact = new Contact(req.body)
-  contact.searchById(req.params.id)
+  const contact = await Contact.searchById(req.params.id)
   if(!contact) return res.render('404')
-  res.render('contact', { contact })
+  res.render('contact', { contact: contact })
 }
 
 exports.edit = async (req, res) => {
@@ -58,4 +57,13 @@ exports.edit = async (req, res) => {
     res.render('404')
   }
 
+}
+
+exports.delete = async (req, res) => {
+  if(!req.params.id) return res.render('404')
+
+  const contact = await Contact.delete(req.params.id)
+  if(!contact) return res.render('404')
+  req.flash('success', 'Contato apagado com Sucesso')
+  req.session.save(() => res.redirect('back'))
 }

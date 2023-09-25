@@ -1,13 +1,8 @@
-// const HomeModel = require('../models/HomeModel')
+const Contact = require('../models/ContactModel')
 
-// HomeModel.create({
-//   title: 'Other title to test',
-//   description: ''
-// })
-  // .then(data => console.log(data))
-  // .catch(e => console.log('Error:', e))
 
-exports.index = (req, res) => {
-  res.render('index')
+exports.index = async (req, res) => {
+  const contacts = await Contact.searchContact()
+  res.render('index', { contacts: contacts })
 }
 
