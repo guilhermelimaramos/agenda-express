@@ -21,7 +21,7 @@ O projeto inclui um sistema de login e cadastro de usuários e foi implantado na
 
 1. Clone o repositório para sua máquina local:
 ```
-git clone https://github.com/seu-usuario/seu-projeto.git
+git clone https://github.com/guilhermelimaramos/agenda-express.git
 ```
 
 2. Instale as dependências:
