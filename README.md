@@ -3,21 +3,21 @@
 Este é um projeto de uma Agenda de Contatos simples desenvolvida com Node.js e Express. 
 O projeto inclui um sistema de login e cadastro de usuários e foi implantado na Google Cloud Platform.
 
-#Funcionalidades
+# Funcionalidades
 
 - **Cadastro de contatos** com informações como nome, número de telefone e endereço.
 - **Autenticação de usuários** com sistema de login.
 - Cada usuário pode visualizar, adicionar, editar e excluir seus próprios contatos.
 - Implantação na Google Cloud Platform para acesso online.
 
-#Tecnologias Utilizadas
+# Tecnologias Utilizadas
 
 - Node.js
 - Express.js
 - MongoDB (ou outro banco de dados de sua escolha)
 - Google Cloud Platform (GCP) para implantação
 
-#Configuração do Projeto
+# Configuração do Projeto
 
 1. Clone o repositório para sua máquina local:
 ```
